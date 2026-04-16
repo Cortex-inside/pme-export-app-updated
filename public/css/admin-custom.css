@@ -1,0 +1,37 @@
+.skin-green .main-header .navbar {
+    background-color: #0F7D40 !important;
+}
+
+.skin-green .main-header .logo {
+    background-color: #008d4c;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+
+.box.box-primary {
+    border-top-color: #0F7D40 !important;
+}
+
+.box.box-solid.box-primary {
+    border: 1px solid #0F7D40 !important;
+}
+
+.box.box-solid.box-primary>.box-header {
+    color: #fff;
+    background: #0F7D40;
+    background-color: #0F7D40;
+}
+
+.btnSpaceRight {
+    margin-right: 5px;
+}
+
+.btnFecharnegocio {
+    background-color: #144830 !important;
+}
+
+.form-group .input-static {
+    border: 1px solid #ccc;
+    background: #f6f6f6;
+    padding: 5px;
+}

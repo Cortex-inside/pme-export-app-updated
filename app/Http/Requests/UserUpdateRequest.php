@@ -1,0 +1,52 @@
+<?php
+
+namespace PMEexport\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UserUpdateRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $user = \Auth::user();
+
+        return [
+            'name' => 'required:max:255|min:3|string',
+            'role_id' => 'required',
+        ];
+
+    }
+
+    //Personalizar mensagem
+    public function messages()
+    {
+        return [
+        ];
+    }
+
+    //Tradução dos campos
+    public function attributes()
+    {
+        return[
+            'name' => 'Nome',
+            'email' => 'E-mail',
+            'role_id' => 'Tipo de usuário',
+        ];
+    }
+}

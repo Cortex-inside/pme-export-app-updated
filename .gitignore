@@ -1,0 +1,33 @@
+# Application
+.env
+*.pem
+*.key
+
+# Laravel
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/
+/storage/framework/
+/storage/logs/
+/vendor
+
+# IDE helpers (generated, not source)
+_ide_helper.php
+_phpstorm.meta.php
+
+# Test artefacts
+.phpunit.result.cache
+/coverage
+
+# Editor / OS
+/.idea
+/.vscode
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db

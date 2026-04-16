@@ -1,0 +1,24 @@
+@extends('layouts.admin.index')
+@section('header')
+    {{--<h4 class="font-weight-bold py-3 mb-0">Layouts and elements</h4>--}}
+    <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin"><i class="feather icon-home"></i></a></li>
+            <li class="breadcrumb-item" ><a href="{{route("companyPartners.index")}}">Sócio da empresa</a></li>
+            <li class="breadcrumb-item active">Editar</li>
+        </ol>
+    </div>
+@endsection
+@section('content')
+    <div class="card mb-4">
+        <h6 class="card-header">Sócio da empresa</h6>
+        <div class="card-body">
+            @include('adminlte-templates::common.errors')
+            {!! Form::model($companyPartner, ['route' => ['companyPartners.update',
+            $companyPartner->id], 'method' => 'patch']) !!}
+
+            @include('company_partners.fields')
+            {!! Form::close() !!}
+        </div>
+    </div>
+@endsection
