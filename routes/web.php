@@ -113,7 +113,10 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','RedirectIfEmpresa', "lo
     //USERS
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', ["as"=>"users.index","uses" => "UserController@index",'middleware'=>['permission:users.index']]);
-        Route::get('/index-empresa', ["as"=>"users.indexEmpresa","uses" => "UserController@indexEmpresa",'middleware'=>['permission:users.index']]);
+        Route::get('/empresas', ["as"=>"users.indexEmpresa","uses" => "UserController@indexEmpresa",'middleware'=>['permission:users.index']]);
+        Route::get('/index-empresa', function () {
+            return redirect()->route('users.indexEmpresa');
+        });
         Route::get('/create', ["as"=>"users.create","uses" => "UserController@create",'middleware'=>['permission:users.create']]);
         Route::post('/', ["as"=>"users.store","uses" => "UserController@store"]);
         Route::get('/{user}', ["as"=>"users.show","uses" => "UserController@show",'middleware'=>['permission:users.show']]);
