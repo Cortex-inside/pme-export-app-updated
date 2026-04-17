@@ -79,7 +79,7 @@
                                     {{--</div>--}}
                                 {{--</div>--}}
                                 <div class="text-right">
-                                    <a href="{{route("exchange.offer-detail",["uuid"=>$announcement->uuid])}}" class='btn btn-primary btn-round'>
+                                    <a href="{{route("exchange.offer-detail",[$announcement->uuid])}}" class='btn btn-primary btn-round'>
                                         {{$announcement->typeOfExposure()}}
                                     </a>
                                 </div>
@@ -135,7 +135,7 @@
                                 </div>
 
                                 <div class="text-right" >
-                                    <a href="{{route("exchange.offer-detail",["uuid"=>$announcement->uuid])}}" class='btn btn-primary btn-round'>
+                                    <a href="{{route("exchange.offer-detail",[$announcement->uuid])}}" class='btn btn-primary btn-round'>
                                         {{$announcement->typeOfExposure()}}
                                     </a>
                                 </div>
