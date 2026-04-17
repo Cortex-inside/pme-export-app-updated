@@ -48,10 +48,9 @@ class UserService
     {
         $data = $request->all();
 
-        if($data['role_id'] != 8) {
-            $data["department_id"] = null;
-        } else if ($data['role_id'] != 7) {
-            $data["department_id"] = null;
+        $roleId = (int) $data['role_id'];
+        if (! in_array($roleId, [7, 8], true)) {
+            $data['department_id'] = null;
         }
 
         $data["password"] = bcrypt($data["password"]);
@@ -68,10 +67,9 @@ class UserService
     {
         $data = $request->all();
 
-        if($data['role_id'] != 8) {
-            $data["department_id"] = null;
-        } else if ($data['role_id'] != 7) {
-            $data["department_id"] = null;
+        $roleId = (int) $data['role_id'];
+        if (! in_array($roleId, [7, 8], true)) {
+            $data['department_id'] = null;
         }
 
         $this->userRepository->update($data, $user->id);
@@ -92,16 +90,13 @@ class UserService
         $user->roles()->detach();
         $user->delete();
 
-        Flash::error('Usuário excluído com sucesso!');
+        Flash::success('Usuário excluído com sucesso!');
 
         return redirect()->route('users.index');
     }
 
     public function updatePassword($request, $user){
-        $data = $request->all();
-        if($data['password'] != $data['repassword']){
-            return redirect()->route('users.change_password',$user->uuid)->with('error', 'As senhas não coencidem, informe a senha novamente.');
-        }
+        $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
         $this->userRepository->update($data, $user->id);
         return redirect()->route('users.show',$user->uuid)->with('message', 'Senha alterada com sucesso.');

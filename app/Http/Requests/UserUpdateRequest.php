@@ -24,11 +24,19 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $user = \Auth::user();
+        $user = $this->route('user');
+        $userId = $user ? $user->id : null;
 
         return [
-            'name' => 'required:max:255|min:3|string',
-            'role_id' => 'required',
+            'name' => 'required|string|min:3|max:255',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'role_id' => 'required|integer|exists:roles,id',
+            'department_id' => 'nullable|integer|exists:departments,id',
         ];
 
     }
@@ -47,6 +55,7 @@ class UserUpdateRequest extends FormRequest
             'name' => 'Nome',
             'email' => 'E-mail',
             'role_id' => 'Tipo de usuário',
+            'department_id' => 'Departamento',
         ];
     }
 }

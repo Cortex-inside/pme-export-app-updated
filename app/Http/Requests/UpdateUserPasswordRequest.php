@@ -4,7 +4,7 @@ namespace PMEexport\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class UpdateUserPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,33 +23,33 @@ class UserStoreRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'name' => 'required|string|min:3|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'role_id' => 'required|integer|exists:roles,id',
             'password' => 'required|string|min:8|confirmed',
-            'department_id' => 'nullable|integer|exists:departments,id',
         ];
-
     }
 
-    //Personalizar mensagem
-    public function messages()
+    /**
+     * Normaliza campos legados antes da validação.
+     */
+    protected function prepareForValidation()
     {
-        return [
-        ];
+        if (! $this->has('password_confirmation') && $this->has('repassword')) {
+            $this->merge([
+                'password_confirmation' => $this->input('repassword'),
+            ]);
+        }
     }
 
-    //Tradução dos campos
+    /**
+     * Tradução dos campos.
+     *
+     * @return array
+     */
     public function attributes()
     {
-        return[
-            'name' => 'Nome',
-            'email' => 'E-mail',
-            'role_id' => 'Tipo de usuário',
+        return [
             'password' => 'Senha',
-            'department_id' => 'Departamento',
+            'password_confirmation' => 'Confirmação de senha',
         ];
     }
 }

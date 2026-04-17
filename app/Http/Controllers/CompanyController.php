@@ -6,6 +6,7 @@ use PMEexport\Criteria\CompanyByStatusCriteria;
 use PMEexport\Criteria\CompanyEmpresaCriteria;
 use PMEexport\Http\Requests\CreateCompanyRequest;
 use PMEexport\Http\Requests\UpdateCompanyRequest;
+use PMEexport\Http\Requests\UpdateUserPasswordRequest;
 use PMEexport\Models\Company;
 use PMEexport\Models\User;
 use PMEexport\Repositories\CompanyRepository;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Flash;
 use PMEexport\Services\CompanyService;
 use PMEexport\Services\UserService;
+use Illuminate\Support\Facades\DB;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -57,7 +59,7 @@ class CompanyController extends AppBaseController
     public function pending(Request $request)
     {
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
-        $this->companyRepository->pushCriteria(new CompanyByStatusCriteria(1));
+        $this->companyRepository->pushCriteria(new CompanyByStatusCriteria(Company::STATUS_PENDING_APPROVAL));
         $companies = $this->companyRepository->paginate();
 
         return view('companies.index')
@@ -66,7 +68,7 @@ class CompanyController extends AppBaseController
     public function approved(Request $request)
     {
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
-        $this->companyRepository->pushCriteria(new CompanyByStatusCriteria(6));
+        $this->companyRepository->pushCriteria(new CompanyByStatusCriteria(Company::STATUS_APPROVED));
         $companies = $this->companyRepository->paginate();
 
         return view('companies.index')
@@ -76,7 +78,7 @@ class CompanyController extends AppBaseController
     public function disapproved(Request $request)
     {
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
-        $this->companyRepository->pushCriteria(new CompanyByStatusCriteria(2));
+        $this->companyRepository->pushCriteria(new CompanyByStatusCriteria(Company::STATUS_DISAPPROVED));
         $companies = $this->companyRepository->paginate();
 
         return view('companies.index')
@@ -91,8 +93,9 @@ class CompanyController extends AppBaseController
 
             return redirect(route('companies.index'));
         }
-        $arrayFinal = array('status' => 6);
-        $this->companyRepository->update($arrayFinal,$company->id);
+        DB::transaction(function () use ($company) {
+            $this->companyRepository->update(['status' => Company::STATUS_APPROVED], $company->id);
+        });
 
         Flash::success('Empresa aprovada com sucesso.');
 
@@ -101,7 +104,10 @@ class CompanyController extends AppBaseController
 
     public function disapprove(Request $request)
     {
-        $input = $request->all();
+        $input = $request->validate([
+            'company_id' => 'required|integer|exists:companies,id',
+            'motive_disapprove' => 'required|string|max:1000',
+        ]);
         $company = $this->companyRepository->find($input['company_id']);
 
         if (empty($company)) {
@@ -109,8 +115,12 @@ class CompanyController extends AppBaseController
 
             return redirect(route('companies.index'));
         }
-        $arrayFinal = array('status' => 4, 'motive_disapprove' => $input['motive_disapprove']);
-        $this->companyRepository->update($arrayFinal,$company->id);
+        DB::transaction(function () use ($company, $input) {
+            $this->companyRepository->update([
+                'status' => Company::STATUS_REVIEW_REQUESTED,
+                'motive_disapprove' => $input['motive_disapprove'],
+            ], $company->id);
+        });
 
         Flash::success('Empresa reprovada com sucesso.');
 
@@ -242,13 +252,8 @@ class CompanyController extends AppBaseController
         return view('users.change_password', compact('user'));
     }
 
-    public function updatePassword(Request $request, User $user)
+    public function updatePassword(UpdateUserPasswordRequest $request, User $user)
     {
-        $data = $request->all();
-
-        if($data['password'] != $data['repassword']){
-            return redirect()->route('sysCompany.company.users.change_password', $user->uuid)->with('error', 'As senhas não coencidem, informe a senha novamente.');
-        }
         $return = $this->userService->updatePassword($request, $user);
 
         Flash::success('Senha alterada com sucesso.');

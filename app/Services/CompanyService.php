@@ -10,7 +10,9 @@ namespace PMEexport\Services;
 
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laracasts\Flash\Flash;
+use PMEexport\Models\Company;
 use PMEexport\Support\UploadStorage;
 use PMEexport\Repositories\CompanyCaeRepository;
 use PMEexport\Repositories\CompanyEmailRepository;
@@ -80,58 +82,53 @@ class CompanyService
         $dados = $request->all();
         $companyId  = Auth::user()->company_id;
 
-        $caes = $dados['caes'];
+        $caes = $dados['caes'] ?? [];
         unset($dados['caes']);
-        $phones = $dados['phones'];
+        $phones = $dados['phones'] ?? [];
         unset($dados['phones']);
-        $emails = $dados['emails'];
+        $emails = $dados['emails'] ?? [];
         unset($dados['emails']);
 
         // SALVANDO OS DOCUMENTOS NUIT E ALVARA NO S3 E COLOCANDO SUAS URLS NO ARRAY
-        $nuitDoc    = $request->file('nuit_doc');
-
-        if($nuitDoc) {
+        $nuitDoc = $request->file('nuit_doc');
+        if ($nuitDoc) {
             $path = UploadStorage::storePublicly($nuitDoc, '/imagens/documents');
-
-            $path = UploadStorage::url($path);
-            $dados['nuit_doc'] = $path;
+            $dados['nuit_doc'] = UploadStorage::url($path);
         }
 
-        $alvaraDoc  = $request->file('alvara_doc');
-        if($alvaraDoc) {
+        $alvaraDoc = $request->file('alvara_doc');
+        if ($alvaraDoc) {
             $path = UploadStorage::storePublicly($alvaraDoc, '/imagens/documents');
-
-            $path = UploadStorage::url($path);
-            $dados['alvara_doc'] = $path;
-        }
-        //PASSANDO O STATUS PARA AGUARDANDO APROVAÇÃO
-        $dados['status'] = 1;
-
-        $this->companyRepository->update($dados, $companyId);
-
-        foreach ($caes as $cae){
-            $dataCae = array(
-                'cae_id' => $cae,
-                'company_id' => $companyId
-            );
-            $this->companyCaeRepository->create($dataCae);
+            $dados['alvara_doc'] = UploadStorage::url($path);
         }
 
-        foreach ($phones as $phone){
-            $dataPhone = array(
-                'company_id' => $companyId,
-                'number' => $phone
-            );
-            $this->companyPhoneRepository->create($dataPhone);
-        }
+        // PASSANDO O STATUS PARA AGUARDANDO APROVAÇÃO
+        $dados['status'] = Company::STATUS_PENDING_APPROVAL;
 
-        foreach ($emails as $email){
-            $dataEmail = array(
-                'company_id' => $companyId,
-                'email' => $email
-            );
-            $this->companyEmailRepository->create($dataEmail);
-        }
+        DB::transaction(function () use ($dados, $companyId, $caes, $phones, $emails) {
+            $this->companyRepository->update($dados, $companyId);
+
+            foreach ($caes as $cae) {
+                $this->companyCaeRepository->create([
+                    'cae_id' => $cae,
+                    'company_id' => $companyId,
+                ]);
+            }
+
+            foreach ($phones as $phone) {
+                $this->companyPhoneRepository->create([
+                    'company_id' => $companyId,
+                    'number' => $phone,
+                ]);
+            }
+
+            foreach ($emails as $email) {
+                $this->companyEmailRepository->create([
+                    'company_id' => $companyId,
+                    'email' => $email,
+                ]);
+            }
+        });
 
         return redirect(route('exchange.index'));
     }
