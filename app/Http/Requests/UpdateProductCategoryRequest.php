@@ -25,6 +25,9 @@ class UpdateProductCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return ProductCategory::$rules;
+        return [
+            'name' => 'required|max:255|min:3|string',
+            'photo' => 'nullable|image',
+        ];
     }
 }

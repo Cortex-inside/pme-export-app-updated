@@ -224,11 +224,11 @@
 
                             @if($announcement->type_of_exposure == 1)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="{{route("exchange.request.offer",["uuid"=>$announcement->uuid])}}"
+                                    <a href="{{route("exchange.request.offer",[$announcement->uuid])}}"
                                        class="btn btn-block btn-warning btn-lg">Negociar Venda</a>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="{{route("exchange.request.confirm-close",["uuid"=>$announcement->uuid])}}" class="btn btn-block btn-success btn-lg btnFecharnegocio">Fechar Negócio</a>
+                                    <a href="{{route("exchange.request.confirm-close",[$announcement->uuid])}}" class="btn btn-block btn-success btn-lg btnFecharnegocio">Fechar Negócio</a>
                                 </li>
                             @endif
 
@@ -241,12 +241,12 @@
 
                             @if($announcement->type_of_exposure == 5)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="{{route("exchange.request.offer",["uuid"=>$announcement->uuid])}}"
+                                    <a href="{{route("exchange.request.offer",[$announcement->uuid])}}"
                                        class="btn btn-block btn-warning btn-lg">Negociar Compra</a>
                                 </li>
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="{{route("exchange.request.confirm-close",["uuid"=>$announcement->uuid])}}" class="btn btn-block btn-success btn-lg">Fechar Negócio</a>
+                                    <a href="{{route("exchange.request.confirm-close",[$announcement->uuid])}}" class="btn btn-block btn-success btn-lg">Fechar Negócio</a>
                                 </li>
                             @endif
 
@@ -260,7 +260,7 @@
                             $announcement->type_of_exposure == 7 OR
                             $announcement->type_of_exposure == 8)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="{{route("exchange.request.offer",["uuid"=>$announcement->uuid])}}" class="btn btn-block btn-warning btn-lg">Contra Indicação</a>
+                                    <a href="{{route("exchange.request.offer",[$announcement->uuid])}}" class="btn btn-block btn-warning btn-lg">Contra Indicação</a>
                                 </li>
                         @endif
 

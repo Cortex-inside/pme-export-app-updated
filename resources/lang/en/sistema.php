@@ -33,6 +33,7 @@ return [
     "dashboard.certificates_all" => "Certified Orders",
     "dashboard.request_announcements_all" => "Product Offers",
     "dashboard.companies_pendentes" => "Pending Companies",
+    "menu.Dashboard" => "Dashboard",
     "menu.Certificates" => "Certificates",
     "menu.Companies" => "Companies",
     "menu.Requests" => "Requests",

@@ -1,10 +1,10 @@
 <!-- Links -->
 <ul class="sidenav-inner py-1">
     <li class="sidenav-item {{(Route::is("dashboard"))? "active": ""}}" data-toggle="tooltip"
-        data-placement="right" title="Dashboard" >
+        data-placement="right" title="@lang('sistema.menu.Dashboard')" >
         <a class="sidenav-link" href="{{route("dashboard")}}">
             <i class="sidenav-icon fas fa-home"></i>
-            <div>Dashboard</div>
+            <div>@lang('sistema.menu.Dashboard')</div>
         </a>
     </li>
         <li class="sidenav-divider mb-1"></li>

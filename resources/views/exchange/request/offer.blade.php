@@ -38,7 +38,7 @@
     </div>
 
 
-    {!! Form::open(['url' => route("exchange.request.close",["uuid"=>$announcement->uuid]), 'id'=>'anuncioPost', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['url' => route('exchange.request.offer-store', [$announcement->uuid]), 'id'=>'anuncioPost', 'enctype' => 'multipart/form-data']) !!}
 
     <div class="row">
         <div class="col">
@@ -128,7 +128,7 @@
                             <button type="submit" class="btn btn-block btn-success btn-lg">Finalizar</button>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{route("exchange.offer-detail",["uuid"=>$announcement->uuid])}}" class="btn
+                            <a href="{{route("exchange.offer-detail",[$announcement->uuid])}}" class="btn
                             btn-default btn-lg btn-block">Voltar</a>
                         </li>
                     </ul>

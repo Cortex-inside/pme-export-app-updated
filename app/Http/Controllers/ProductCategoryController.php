@@ -68,7 +68,7 @@ class ProductCategoryController extends AppBaseController
 
         $imageRequest = $request->file('photo');
 
-        $path = UploadStorage::storePublicly($imageRequest, '/imagens/categoria');
+        $path = UploadStorage::storePublicly($imageRequest, 'imagens/categoria');
 
         $input["photo"] = $path;
 
@@ -133,12 +133,13 @@ class ProductCategoryController extends AppBaseController
             return redirect(route('productCategories.index'));
         }
 
+        $input = $request->all();
         $imageRequest = $request->file('photo');
 
-        $path = UploadStorage::storePublicly($imageRequest, '/imagens/categoria');
-
-        $input = $request->all();
-        $input["photo"] = $path;
+        if ($imageRequest) {
+            $path = UploadStorage::storePublicly($imageRequest, 'imagens/categoria');
+            $input["photo"] = $path;
+        }
 
         $this->productCategoryRepository->update($input, $productCategory->id);
 

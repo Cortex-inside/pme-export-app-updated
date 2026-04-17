@@ -27,7 +27,7 @@
                 <div class="form-group col-sm-12 col-lg-12">
                     {!! Form::label(str_slug($requirement->requirement->name,'_'), $requirement->requirement->name, ['class'=>'form-label']) !!}
                     @if($requirement->requirement->type == 1)
-                        {!! Form::file($requirement->requirement->id, null, ['class' => 'form-control ', 'required'])
+                        {!! Form::file($requirement->requirement->id, ['class' => 'form-control ', 'required'])
                          !!}
                     @else
                         {!! Form::textarea($requirement->requirement->id, null, ['class' => 'form-control', 'required']) !!}

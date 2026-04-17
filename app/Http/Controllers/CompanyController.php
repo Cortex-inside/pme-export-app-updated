@@ -16,6 +16,7 @@ use Flash;
 use PMEexport\Services\CompanyService;
 use PMEexport\Services\UserService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -123,10 +124,32 @@ class CompanyController extends AppBaseController
         });
 
         Flash::success('Empresa reprovada com sucesso.');
-
-        //TODO: ADICIONAR ENVIO DE EMAIL AQUI
+        $this->sendDisapprovalEmail($company, $input['motive_disapprove']);
 
         return redirect()->back();
+    }
+
+    protected function sendDisapprovalEmail(Company $company, string $motive): void
+    {
+        $emails = $company->users()
+            ->whereNotNull('email')
+            ->pluck('email')
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($emails)) {
+            return;
+        }
+
+        $subject = 'Atualização do cadastro da empresa';
+        $message = "O cadastro da empresa {$company->name} foi reprovado para revisão.\n\nMotivo informado:\n{$motive}\n\nAcesse a plataforma e atualize os dados solicitados.";
+
+        foreach ($emails as $email) {
+            Mail::raw($message, function ($mail) use ($email, $subject) {
+                $mail->to($email)->subject($subject);
+            });
+        }
     }
 
     public function indexMyCompany()

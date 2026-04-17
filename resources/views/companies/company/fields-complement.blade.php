@@ -40,7 +40,7 @@
 
     <div class="form-group col-sm-6">
         {!! Form::label('nuit_doc', 'NUIT:', ['class'=>'form-label w-100']) !!}
-        {!! Form::file('nuit_doc', null, ['class' => 'form-control nuitDoc', 'required']) !!}
+        {!! Form::file('nuit_doc', ['class' => 'form-control nuitDoc', 'required']) !!}
     </div>
 
 </div>
@@ -52,7 +52,7 @@
 
     <div class="form-group col-sm-6">
         {!! Form::label('alvara_doc', 'Alvara:', ['class'=>'form-label w-100']) !!}
-        {!! Form::file('alvara_doc', null, ['class' => 'form-control alvaraDoc', 'required']) !!}
+        {!! Form::file('alvara_doc', ['class' => 'form-control alvaraDoc', 'required']) !!}
     </div>
 </div>
 
