@@ -63,29 +63,29 @@ class ProductCategory extends Model
 
 
     public static $rules = [
-        'name' => 'required:max:255|min:3|string',
-        'photo' => 'required',
+        'name' => 'required|max:255|min:3|string',
+        'photo' => 'required|image',
     ];
 
 
     public function getPhotoUrlAttribute()
     {
-        if (!$this->photo) {
-            return null;
+        if (! $this->photo) {
+            return asset('img/blank.gif');
         }
 
         if (Str::startsWith($this->photo, ['http://', 'https://'])) {
             return $this->photo;
         }
 
-        return UploadStorage::url($this->photo);
-        $baseUrl = rtrim((string) config('filesystems.disks.s3.url', env('AWS_URL', '')), '/');
+        $normalizedPath = ltrim($this->photo, '/');
 
-        if (!$baseUrl) {
-            return $this->photo;
+        // Compatibilidade com categorias antigas salvas em caminhos públicos (ex: /imagens/categoria/...)
+        if (file_exists(public_path($normalizedPath))) {
+            return asset($normalizedPath);
         }
 
-        return $baseUrl . '/' . ltrim($this->photo, '/');
+        return UploadStorage::url($normalizedPath) ?: asset('img/blank.gif');
     }
 
     public function nameFilter()

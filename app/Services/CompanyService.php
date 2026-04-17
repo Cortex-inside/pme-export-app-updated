@@ -92,13 +92,13 @@ class CompanyService
         // SALVANDO OS DOCUMENTOS NUIT E ALVARA NO S3 E COLOCANDO SUAS URLS NO ARRAY
         $nuitDoc = $request->file('nuit_doc');
         if ($nuitDoc) {
-            $path = UploadStorage::storePublicly($nuitDoc, '/imagens/documents');
+            $path = UploadStorage::storePublicly($nuitDoc, 'imagens/documents');
             $dados['nuit_doc'] = UploadStorage::url($path);
         }
 
         $alvaraDoc = $request->file('alvara_doc');
         if ($alvaraDoc) {
-            $path = UploadStorage::storePublicly($alvaraDoc, '/imagens/documents');
+            $path = UploadStorage::storePublicly($alvaraDoc, 'imagens/documents');
             $dados['alvara_doc'] = UploadStorage::url($path);
         }
 

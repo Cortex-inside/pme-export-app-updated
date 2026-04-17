@@ -125,7 +125,7 @@ class CertificateService
             if ($certificateRequirement->requirement->type == 1) {
                 $imageRequest = $request->file($certificateRequirement->requirement->id);
 
-                $path = UploadStorage::storePublicly($imageRequest, '/imagens/documents');
+                $path = UploadStorage::storePublicly($imageRequest, 'imagens/documents');
 
                 $path = UploadStorage::url($path);
 

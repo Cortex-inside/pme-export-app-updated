@@ -4,6 +4,8 @@ namespace PMEexport\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use PMEexport\Support\UploadStorage;
 use PMEexport\Traits\Uuids;
 
 /**
@@ -106,5 +108,27 @@ class Document extends Model
     public function user()
     {
         return $this->belongsTo(\PMEexport\Models\User::class);
+    }
+
+    /**
+     * Resolve the persisted document path/URL to a browser-accessible URL.
+     */
+    public function getUrlResolvedAttribute(): ?string
+    {
+        if (! $this->url) {
+            return null;
+        }
+
+        if (Str::startsWith($this->url, ['http://', 'https://'])) {
+            return $this->url;
+        }
+
+        $normalizedPath = ltrim($this->url, '/');
+
+        if (file_exists(public_path($normalizedPath))) {
+            return asset($normalizedPath);
+        }
+
+        return UploadStorage::url($normalizedPath);
     }
 }

@@ -36,7 +36,7 @@
         <div class="form-group  col-md-3">
             {!! Form::label(str_slug($document->requirement->name,'_'), $document->requirement->name.':') !!}
             @if($document->type == 1)
-                <p><a class="btn btn-primary" href="{{$document->url}}" target="_blank"><i class="fa fa-file"></i> Visualizar documento</a></p>
+                <p><a class="btn btn-primary" href="{{$document->url_resolved}}" target="_blank"><i class="fa fa-file"></i> Visualizar documento</a></p>
             @else
                 <p>{{$document->text}}</p>
             @endif
@@ -44,5 +44,4 @@
 
     @endforeach
 </div>
-
 
