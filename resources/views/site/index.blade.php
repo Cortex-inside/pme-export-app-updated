@@ -100,7 +100,7 @@
                                     e recomedados.
                                 </p>
 
-                                <a class="gallery-more-link" href="{!! route('exchange.index') !!}">Ver toda Galeria</a>
+                                <a class="gallery-more-link" href="{!! route('site.produtos') !!}">Ver todas as categorias</a>
                             </div>
                         </div>
                         <!-- end item -->
@@ -111,10 +111,10 @@
                             <div class="gallery__item">
                                 <div class="gallery__item__inner">
                                     <figure>
-                                        <img src="/img/blank.gif" style="background-image: url('{{$category->photo_url}}');" alt="demo" />
+                                        <img src="{{ $category->photo_url }}" alt="{{ $category->name }}" style="width:100%;height:240px;object-fit:cover;" />
 
-                                        <a class="gallery__item__description" href="{!! route('exchange.index') !!}" >
-                                            <span class="gallery__item__title">Produto</span>
+                                        <a class="gallery__item__description" href="{!! route('exchange.index', ['category_id' => $category->id]) !!}" >
+                                            <span class="gallery__item__title">Ver ofertas</span>
                                             <span class="gallery__item__subtitle">{{$category->name}}</span>
                                         </a>
                                     </figure>

@@ -21,9 +21,9 @@
                             <div class="gallery__item">
                                 <div class="gallery__item__inner">
                                     <figure>
-                                        <img src="/img/blank.gif" style="background-image: url('{{$category->photo_url}}');" alt="demo" />
+                                        <img src="{{ $category->photo_url }}" alt="{{ $category->name }}" style="width:100%;height:240px;object-fit:cover;" />
 
-                                        <a class="gallery__item__description" href="{!! route('exchange.index') !!}" >
+                                        <a class="gallery__item__description" href="{!! route('exchange.index', ['category_id' => $category->id]) !!}" >
                                             <span class="gallery__item__title">{{$category->name}}</span>
                                             {{--<span class="gallery__item__subtitle">Fruits</span>--}}
                                         </a>

@@ -38,6 +38,17 @@ class ExchangeService
     public function listProducts()
     {
         $this->companyAnnouncementRepository->pushCriteria(new AnunciosCriteria());
+
+        $categoryId = (int) request('category_id');
+
+        if ($categoryId > 0) {
+            $this->companyAnnouncementRepository->scopeQuery(function ($query) use ($categoryId) {
+                return $query->whereHas('product', function ($productQuery) use ($categoryId) {
+                    $productQuery->where('product_category_id', $categoryId);
+                });
+            });
+        }
+
         $announcements = $this->companyAnnouncementRepository->all();
 
         return view('exchange.index', compact('announcements'));
