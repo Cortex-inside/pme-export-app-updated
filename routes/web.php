@@ -13,18 +13,18 @@
 
 Route::group(['middleware' => ['locale']], function () {
     Route::get('/', ['as' => 'site.index', 'uses' => 'SiteController@index']);
-    Route::get('/contato', ["as" => "site.contato", "uses" => "ContatoController@contato"]);
+    Route::get('/contato', ["as" => "site.contato", "uses" => "SiteController@contato"]);
     Route::get('/suporte', function () {
         return redirect()->route('site.contato');
     })->name('site.suporte');
     Route::view('/faq', 'site.faq')->name('site.faq');
-    Route::post('/contato', ["as" => "site.contato-envia", "uses" => "ContatoController@contatoEnvia"]);
-    Route::get('/sobre', ["as" => "site.sobre", "uses" => "HomeController@about"]);
-    Route::get('/produtos', ["as" => "site.produtos", "uses" => "ProdutoController@index"]);
-    Route::get('/certificacao-online', ["as" => "site.certificacao-online", "uses" => "CertificacaoController@online"]);
-    Route::get('/club-pme', ["as" => "site.club-pme", "uses" => "CertificacaoController@club"]);
-    Route::post('/newsletter', ["as" => "site.newsletter", "uses" => "NewsletterController@store"]);
-    Route::get('/parceiros', ["as" => "site.parceiros", "uses" => "ParceiroController@index"]);
+    Route::post('/contato', ["as" => "site.contato-envia", "uses" => "SiteController@contatoEnvia"]);
+    Route::get('/sobre', ["as" => "site.sobre", "uses" => "SiteController@sobre"]);
+    Route::get('/produtos', ["as" => "site.produtos", "uses" => "SiteController@produtos"]);
+    Route::get('/certificacao-online', ["as" => "site.certificacao-online", "uses" => "SiteController@certificacaoOnline"]);
+    Route::get('/club-pme', ["as" => "site.club-pme", "uses" => "SiteController@clubPme"]);
+    Route::post('/newsletter', ["as" => "site.newsletter", "uses" => "SiteController@newsletter"]);
+    Route::get('/parceiros', ["as" => "site.parceiros", "uses" => "SiteController@parceiros"]);
 });
 
 //ALTERAR LOCALE
