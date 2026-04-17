@@ -1,9 +1,9 @@
 <!-- Links -->
 <ul class="sidenav-inner py-1">
 
-    <!-- Dashboards -->
+    <!-- Dashboard -->
     <li class="sidenav-item {{(Route::is("exchange.index"))? "active": ""}}" data-toggle="tooltip"
-        data-placement="right" title="Dashboard" >
+        data-placement="right" title="@lang('sistema.menu.Dashboard')" >
         <a class="sidenav-link" href="{{route("exchange.index")}}">
             <i class="sidenav-icon fas fa-hand-holding-usd"></i>
             <div>@lang('sistema.menu_empresa.CompraVenda')</div>
@@ -100,8 +100,8 @@
         </ul>
     </li>
 
-    <!-- Dashboards -->
-    <li class="sidenav-item" data-toggle="tooltip" data-placement="right" title="Dashboard" >
+    <!-- Dashboard -->
+    <li class="sidenav-item" data-toggle="tooltip" data-placement="right" title="@lang('sistema.menu.Dashboard')" >
         <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidenav-link" >
             <i class="sidenav-icon oi oi-account-logout"></i>
             <div>@lang('sistema.menu_empresa.Sair')</div>

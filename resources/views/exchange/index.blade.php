@@ -38,9 +38,9 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-wrap mt-3">
-                                    <div class="mr-3"><i class="vacancy-tooltip mr-1 ion ion-md-business text-primary" title="Department"></i> {!! $company->name !!}</div>
+                                    <div class="mr-3"><i class="vacancy-tooltip mr-1 ion ion-md-business text-primary" title="Empresa"></i> {!! $company->name !!}</div>
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 fas fa-project-diagram text-light"
-                                                         title="Employment"></i> Mercado: {{$announcement->marketType()}}</div>
+                                                         title="Mercado"></i> Mercado: {{$announcement->marketType()}}</div>
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 fas fa-money-check text-light"
                                                          title="Pagamento"></i>Pagamento:
                                         {{$announcement->paymentModel()}}</div>
@@ -103,9 +103,9 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-wrap mt-3">
-                                    <div class="mr-3"><i class="vacancy-tooltip mr-1 ion ion-md-business text-primary" title="Department"></i> {!! $company->name !!}</div>
+                                    <div class="mr-3"><i class="vacancy-tooltip mr-1 ion ion-md-business text-primary" title="Empresa"></i> {!! $company->name !!}</div>
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 fas fa-project-diagram text-light"
-                                                         title="Employment"></i> Mercado: {{$announcement->marketType()}}</div>
+                                                         title="Mercado"></i> Mercado: {{$announcement->marketType()}}</div>
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 fas fa-money-check text-light"
                                                          title="Pagamento"></i>Pagamento:
                                         {{$announcement->paymentModel()}}</div>
