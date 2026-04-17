@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware' => ['locale']], function () {
-    Route::get('/', ["as" => "site.index", "uses" => "HomeController@index"]);
+    Route::get('/', ['as' => 'site.index', 'uses' => 'SiteController@index']);
     Route::get('/contato', ["as" => "site.contato", "uses" => "ContatoController@contato"]);
     Route::get('/suporte', function () {
         return redirect()->route('site.contato');
