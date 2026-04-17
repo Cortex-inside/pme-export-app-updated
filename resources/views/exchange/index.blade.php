@@ -29,7 +29,14 @@
                         <div class="card mb-4 overflow-hidden">
                             <div class="card-body">
                                 {{--<div class="card-badges bg-danger text-white"><span>Urgent</span></div>--}}
-                                <a href="javascript:void(0)" class="text-dark text-large font-weight-semibold">Produto: {{$product->name}}</a>
+                                @php($category = $product->productCategory)
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="{{ optional($category)->photo_url ?? asset('img/blank.gif') }}" alt="{{ optional($category)->name ?? 'Categoria' }}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;" class="mr-2"/>
+                                    <div>
+                                        <div class="text-dark text-large font-weight-semibold">Produto: {{$product->name}}</div>
+                                        <small class="text-muted">Categoria: {{ optional($category)->name ?? 'Não informada' }}</small>
+                                    </div>
+                                </div>
                                 <div class="d-flex flex-wrap mt-3">
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 ion ion-md-business text-primary" title="Department"></i> {!! $company->name !!}</div>
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 fas fa-project-diagram text-light"
@@ -87,7 +94,14 @@
                         <div class="card mb-4 overflow-hidden">
                             <div class="card-body">
                                 {{--<div class="card-badges bg-danger text-white"><span>Urgent</span></div>--}}
-                                <a href="javascript:void(0)" class="text-dark text-large font-weight-semibold">Produto: {{$product->name}}</a>
+                                @php($category = $product->productCategory)
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="{{ optional($category)->photo_url ?? asset('img/blank.gif') }}" alt="{{ optional($category)->name ?? 'Categoria' }}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;" class="mr-2"/>
+                                    <div>
+                                        <div class="text-dark text-large font-weight-semibold">Produto: {{$product->name}}</div>
+                                        <small class="text-muted">Categoria: {{ optional($category)->name ?? 'Não informada' }}</small>
+                                    </div>
+                                </div>
                                 <div class="d-flex flex-wrap mt-3">
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 ion ion-md-business text-primary" title="Department"></i> {!! $company->name !!}</div>
                                     <div class="mr-3"><i class="vacancy-tooltip mr-1 fas fa-project-diagram text-light"

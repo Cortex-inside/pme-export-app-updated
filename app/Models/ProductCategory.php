@@ -63,8 +63,8 @@ class ProductCategory extends Model
 
 
     public static $rules = [
-        'name' => 'required:max:255|min:3|string',
-        'photo' => 'required',
+        'name' => 'required|max:255|min:3|string',
+        'photo' => 'required|image',
     ];
 
 

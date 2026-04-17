@@ -67,7 +67,7 @@
 
                     <!-- Sidenav toggle (see /assets/css/demo/demo.css) -->
                     <div class="layout-sidenav-toggle navbar-nav d-lg-none align-items-lg-center mr-auto">
-                        <a class="nav-item nav-link px-0 mr-lg-4" href="javascript:">
+                        <a class="nav-item nav-link px-0 mr-lg-4 layout-sidenav-toggle" href="javascript:">
                             <i class="ion ion-md-menu text-large align-middle"></i>
                         </a>
                     </div>
