@@ -54,6 +54,16 @@ class Company extends Model
     use SoftDeletes;
     use Uuids;
 
+    public const TYPE_LOCAL = 1;
+    public const TYPE_FOREIGN = 2;
+
+    public const STATUS_PENDING_APPROVAL = 1;
+    public const STATUS_DISAPPROVED = 2;
+    public const STATUS_DISABLED = 3;
+    public const STATUS_REVIEW_REQUESTED = 4;
+    public const STATUS_PENDING_COMPLETION = 5;
+    public const STATUS_APPROVED = 6;
+
     public $table = 'companies';
     
     const CREATED_AT = 'created_at';
@@ -130,7 +140,23 @@ class Company extends Model
      * @var array
      */
     public static $rules = [
-        
+        'name' => 'required|string|min:3|max:255',
+        'status' => 'nullable|integer|between:1,6',
+        'legal_situation_id' => 'nullable|integer|exists:legal_situations,id',
+        'district_id' => 'nullable|integer|exists:districts,id',
+        'initials' => 'nullable|string|max:20',
+        'address' => 'nullable|string|max:255',
+        'number' => 'nullable|string|max:20',
+        'locality' => 'nullable|string|max:255',
+        'website' => 'nullable|url|max:255',
+        'nuit' => 'nullable|integer',
+        'alvara' => 'nullable|integer',
+        'initial_investment' => 'nullable|string|max:255',
+        'business_volume' => 'nullable|integer|between:1,3',
+        'number_of_workers_h' => 'nullable|integer|min:0',
+        'number_of_workers_m' => 'nullable|integer|min:0',
+        'type' => 'nullable|integer|in:1,2',
+        'motive_disapprove' => 'nullable|string|max:1000',
     ];
 
     /**
@@ -217,38 +243,56 @@ class Company extends Model
 
     public function typeName()
     {
-        if ($this->type == 1) {
-            return "Local";
-        }else if($this->type == 2) {
-            return "Estrangeira";
+        if ($this->type == self::TYPE_LOCAL) {
+            return 'Local';
         }
+
+        if ($this->type == self::TYPE_FOREIGN) {
+            return 'Estrangeira';
+        }
+
+        return 'Desconhecida';
     }
     public function status()
     {
-        if ($this->status == 1) {
-            return "Aguardando aprovação";
-        }else if($this->status == 2) {
-            return "Cadastro reprovado";
-        }else if($this->status == 3) {
-            return "Empresa desativada";
-        }else if($this->status == 4) {
-            return "Revisar documentos/informações";
-        }else if($this->status == 5) {
-            return "Aguardando finalização de cadastro";
-        }else if($this->status == 6) {
-            return "Cadastro aprovado";
+        if ($this->status == self::STATUS_PENDING_APPROVAL) {
+            return 'Aguardando aprovação';
         }
+
+        if ($this->status == self::STATUS_DISAPPROVED) {
+            return 'Cadastro reprovado';
+        }
+
+        if ($this->status == self::STATUS_DISABLED) {
+            return 'Empresa desativada';
+        }
+
+        if ($this->status == self::STATUS_REVIEW_REQUESTED) {
+            return 'Revisar documentos/informações';
+        }
+
+        if ($this->status == self::STATUS_PENDING_COMPLETION) {
+            return 'Aguardando finalização de cadastro';
+        }
+
+        if ($this->status == self::STATUS_APPROVED) {
+            return 'Cadastro aprovado';
+        }
+
+        return 'Status desconhecido';
     }
 
 
     public function business_volume()
     {
         if ($this->business_volume == 1) {
-            return "0 » 1.200.000.000 MT Micro";
-        }else if($this->business_volume == 2) {
-            return "1.200.000.000 MT » 14.700.000.000 MT Pequena";
-        }else if($this->business_volume == 3) {
-            return "14.700.000.000 MT » 29.970.000.000 MT Média";
+            return '0 » 1.200.000.000 MT Micro';
+        } else if ($this->business_volume == 2) {
+            return '1.200.000.000 MT » 14.700.000.000 MT Pequena';
+        } else if ($this->business_volume == 3) {
+            return '14.700.000.000 MT » 29.970.000.000 MT Média';
         }
+
+        return 'Faixa não informada';
     }
 }

@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use PMEexport\Http\Requests\CreateCaeRequest;
 use PMEexport\Http\Requests\UpdateCaeRequest;
 use PMEexport\Http\Requests\UserUpdateRequest;
+use PMEexport\Http\Requests\UpdateUserPasswordRequest;
 use PMEexport\Models\User;
 use PMEexport\Repositories\CaeRepository;
 use PMEexport\Http\Controllers\AppBaseController;
@@ -83,7 +84,7 @@ class UserController extends AppBaseController
 
         $this->userService->addNewUser($userRequest);
 
-        Flash::success('Usuário atualizado com sucesso.');
+        Flash::success('Usuário criado com sucesso.');
 
         return redirect()->route('users.index');
     }
@@ -172,7 +173,7 @@ class UserController extends AppBaseController
         return view('users.change_password', compact('user','roles'));
     }
 
-    public function updatePassword(Request $request, User $user)
+    public function updatePassword(UpdateUserPasswordRequest $request, User $user)
     {
         $return = $this->userService->updatePassword($request, $user);
         return $return;
