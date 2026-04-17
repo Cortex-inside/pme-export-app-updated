@@ -176,30 +176,30 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','RedirectIfEmpresa', "lo
 
 Route::group(['prefix' => 'exchange', 'middleware' => ['auth', 'RedirectIfEmpresa', 'locale']], function () {
 
-    Route::get('/', ["as" => "exchange.index", "uses" => "HomeController@index"]);
-    Route::get('/offer-detail/{announcement}', ["as" => "exchange.offer-detail", "uses" => "OfferController@detail"]);
+    Route::get('/', ["as" => "exchange.index", "uses" => "Exchange\HomeController@index"]);
+    Route::get('/offer-detail/{announcement}', ["as" => "exchange.offer-detail", "uses" => "Exchange\OfferController@detail"]);
 
     //REQUESTS
-    Route::get('/requests', ["as" => "exchange.requests", "uses" => "RequestController@index"]);
-    Route::get('/requests-enviados', ["as" => "exchange.requests-enviados", "uses" => "RequestController@enviados"]);
-    Route::get('/requests-recebidos', ["as" => "exchange.requests-recebidos", "uses" => "RequestController@recebidos"]);
-    Route::get('/requests-todos', ["as" => "exchange.requests-todos", "uses" => "RequestController@todos"]);
-    Route::get('/requests-fechados', ["as" => "exchange.requests-fechados", "uses" => "RequestController@fechados"]);
+    Route::get('/requests', ["as" => "exchange.requests", "uses" => "Exchange\RequestController@index"]);
+    Route::get('/requests-enviados', ["as" => "exchange.requests-enviados", "uses" => "Exchange\RequestController@enviados"]);
+    Route::get('/requests-recebidos', ["as" => "exchange.requests-recebidos", "uses" => "Exchange\RequestController@recebidos"]);
+    Route::get('/requests-todos', ["as" => "exchange.requests-todos", "uses" => "Exchange\RequestController@todos"]);
+    Route::get('/requests-fechados', ["as" => "exchange.requests-fechados", "uses" => "Exchange\RequestController@fechados"]);
 
-    Route::get('/request/detail/{announcement_request}', ["as" => "exchange.request.detail", "uses" => "RequestController@detail"]);
-    Route::post('/request/cancelation/{announcement_request}', ["as" => "exchange.request.cancelation", "uses" => "RequestController@cancelation"]);
+    Route::get('/request/detail/{announcement_request}', ["as" => "exchange.request.detail", "uses" => "Exchange\RequestController@detail"]);
+    Route::post('/request/cancelation/{announcement_request}', ["as" => "exchange.request.cancelation", "uses" => "Exchange\RequestController@cancelation"]);
 
-    Route::post('/request/closed/{announcement_request}', ["as" => "exchange.request.closed", "uses" => "RequestController@closed"]);
+    Route::post('/request/closed/{announcement_request}', ["as" => "exchange.request.closed", "uses" => "Exchange\RequestController@closed"]);
 
     //REQUEST OFFERS
-    Route::get('/request/offer/{announcement}', ["as" => "exchange.request.offer", "uses" => "RequestController@offerRequest"]);
-    Route::post('/request/offer/{announcement}', ["as" => "exchange.request.offer-store", "uses" => "RequestController@offerStoreRequest"]);
+    Route::get('/request/offer/{announcement}', ["as" => "exchange.request.offer", "uses" => "Exchange\RequestController@offerRequest"]);
+    Route::post('/request/offer/{announcement}', ["as" => "exchange.request.offer-store", "uses" => "Exchange\RequestController@offerStoreRequest"]);
 
     //REQUEST CLOSE DIRECT
-    Route::get('/request/confirm-close/{announcement}', ["as" => "exchange.request.confirm-close", "uses" => "RequestController@confirmCloseRequest"]);
-    Route::post('/request/close/{announcement}', ["as" => "exchange.request.close", "uses" => "RequestController@closeRequest"]);
+    Route::get('/request/confirm-close/{announcement}', ["as" => "exchange.request.confirm-close", "uses" => "Exchange\RequestController@confirmCloseRequest"]);
+    Route::post('/request/close/{announcement}', ["as" => "exchange.request.close", "uses" => "Exchange\RequestController@closeRequest"]);
 
-    Route::post('/sendMessage', ["as"=>"exchange.request.sendMessageRequest","uses" => "RequestController@sendMessageRequest"]);
+    Route::post('/sendMessage', ["as"=>"exchange.request.sendMessageRequest","uses" => "Exchange\RequestController@sendMessageRequest"]);
 
 
 });
